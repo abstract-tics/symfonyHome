@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{% block title %}bstract{% endblock %}</title>
+        <link rel="icon" type="image/x-icon" href="{{ asset('images/icono.png') }}" />
+
+        {% block head_css %}
+            <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}">
+            <link rel="stylesheet" type="text/css" href="{{ asset('css/jquery-ui.min.css') }}">
+
+        {% endblock %}
+
+        {% block head_js %}
+            <script type="text/javascript" src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
+            <script type="text/javascript" src="{{ asset('js/popper.min.js') }}"></script>
+            <script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>
+            <script type="text/javascript" src="{{ asset('js/jquery-ui.min.js') }}"></script>
+        {% endblock %}
+
+
+    </head>
+    <body class="fondoIni">
+
+        <div id="contenedor" class="container-fluid">
+            <nav id="navCabecera" class="navbar fixed-top navbar-light bg-light">
+                <a id="navCabeceraImg" class="navbar-brand" href="#" style='z-index:100'><img src="images/logo.png" style='width:auto;height:120px;'></a>
+                <form class="form-inline d-none">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+
+            </nav>        
+
+        {% block body %}{% endblock %}
+
+       
+            <nav id="navFootImg" class="navbar fixed-bottom navbar-light bg-light">                                
+            <div class="float-left"><img src="images/contactanosNombre.png" style='width:auto;height:40px;padding-bottom:5px;'><label style="font-size: 1.5rem;margin-bottom:0px;">abstract.tics@gmail.com</label></div>
+            
+            </nav>
+         
+        </div>
+
+        {% block stylesheets %}
+            <style>
+                #navCabecera{
+                    background-image: linear-gradient(to right, white , #50A097);
+                    border-bottom: 4px solid rgba(0, 119, 0, 0.4);
+                }
+
+                #navFootImg{
+                    background-image: linear-gradient(to right, white , #50A097);
+                    border-top: 8px solid rgba(0, 119, 0, 0.4);
+                }        
+
+                .mostrar{
+                    opacity:1;
+                    transition:opacity 0.7s ease;                 
+                } 
+
+                .ocultar{
+                    opacity:0; 
+                    position: fixed;  
+                    width: 0px;
+                    height:0px;
+                }
+
+                .fondoIni{
+                    background-color: #1fc8db;
+                    background-image: linear-gradient(141deg, #9fb8ad 0%, #1fc8db 20%, #2cb5e8 20%);
+                }
+
+                .fondoFin{
+                    background-color: white;
+                    transition: background-color 1s ease;
+                    -webkit-transition: background-color 1s ease;
+                    -moz-transition: background-color 1s ease;
+                    -o-transition: background-color 1s ease;                  
+
+                }                
+
+
+                
+            </style>
+        {% endblock %}
+
+        {% block javascripts %}
+        <script>
+        $(document).ready(function() {   
+            var aluraNavBar = 138;
+            var alturaNavegador = ($( document ).height());
+            var anchoNavegador = ($( document ).width());
+
+            //horizontal
+            if(anchoNavegador > alturaNavegador){
+
+                var alturaNavegadorDisponible = ($( document ).height()) - aluraNavBar;
+
+                $( "#fondo" ).css( "padding-top", aluraNavBar );      
+                $( "#fondo" ).css( "height", alturaNavegadorDisponible );                           
+                
+                $( "#fondo" ).append( "<img id='imgBackgroundB' class='img-fluid mostrar' src='images/backgroundB.png'></img>" );                   
+                $( "#fondo" ).append( "<img id='imgBackgroundC' class='img-fluid ocultar' src='images/backgroundC.png'></img>" );
+                $( "#fondo" ).append( "<img id='imgBackgroundA' class='img-fluid ocultar' src='images/backgroundA.png'></img>" );
+                                 
+                $('body').toggleClass('fondoFin');
+                $('body').toggleClass('fondoIni');                                 
+
+
+                var anchoNav = $("#navCabecera").width();
+                var anchoImgNav = $("#navCabeceraImg").width() + 30;
+                var espacioDisponible = anchoNav - anchoImgNav;
+                var espacioDisponibleTercio = espacioDisponible/3;
+
+                var ordenIcono = getRandomInt(1, 3);
+                var ordenIconoDos = getRandomInt(2, 4);
+
+                if(ordenIcono == 1){
+
+                    var posXIniA = getRandomInt(anchoImgNav, anchoImgNav + espacioDisponibleTercio);
+                    var posYIniA = getRandomInt(1, 60);
+
+                    $( "#navCabecera" ).append( "<img id='logoA' src='images/logoA.png' style='opacity:0;z-index:50;position:absolute;width:auto;height:50px;' ></img>" );
+                    $( "#logoA" ).css( "left", posXIniA );
+                    $( "#logoA" ).css( "top", posYIniA );   
+
+                    if(ordenIconoDos == 2){
+                        var posXIniB = getRandomInt(anchoImgNav + espacioDisponibleTercio, anchoImgNav + 2*espacioDisponibleTercio);
+                        var posYIniB = getRandomInt(1, 60);              
+                        $( "#navCabecera" ).append( "<img id='logoB' src='images/logoB.png' style='z-index:40;position:absolute;width:auto;height:50px;' ></img>" );
+                        $( "#logoB" ).css( "left", posXIniB );
+                        $( "#logoB" ).css( "top", posYIniB );       
+
+                        var posXIniD = getRandomInt(anchoImgNav + 2*espacioDisponibleTercio, anchoImgNav + (3*espacioDisponibleTercio-50));
+                        var posYIniD = getRandomInt(1, 60);       
+                        $( "#navCabecera" ).append( "<img id='logoD' src='images/logoD.png' style='z-index:20;position:absolute;width:auto;height:50px;' ></img>" );
+                        $( "#logoD" ).css( "left", posXIniD );
+                        $( "#logoD" ).css( "top", posYIniD );                                          
+
+                    }
+                    else{
+                        var posXIniD = getRandomInt(anchoImgNav + espacioDisponibleTercio, anchoImgNav + 2*espacioDisponibleTercio);
+                        var posYIniD = getRandomInt(1, 60);       
+                        $( "#navCabecera" ).append( "<img id='logoD' src='images/logoD.png' style='z-index:20;position:absolute;width:auto;height:50px;' ></img>" );
+                        $( "#logoD" ).css( "left", posXIniD );
+                        $( "#logoD" ).css( "top", posYIniD );       
+
+                        var posXIniB = getRandomInt(anchoImgNav + 2*espacioDisponibleTercio, anchoImgNav + (3*espacioDisponibleTercio-50));
+                        var posYIniB = getRandomInt(1, 60);              
+                        $( "#navCabecera" ).append( "<img id='logoB' src='images/logoB.png' style='z-index:40;position:absolute;width:auto;height:50px;' ></img>" );
+                        $( "#logoB" ).css( "left", posXIniB );
+                        $( "#logoB" ).css( "top", posYIniB );                                    
+
+                    }           
+
+                }
+                else{
+                    var posXIniB = getRandomInt(anchoImgNav, anchoImgNav + espacioDisponibleTercio);
+                    var posYIniB = getRandomInt(1, 60);              
+                    $( "#navCabecera" ).append( "<img id='logoB' src='images/logoB.png' style='z-index:40;position:absolute;width:auto;height:50px;' ></img>" );
+                    $( "#logoB" ).css( "left", posXIniB );
+                    $( "#logoB" ).css( "top", posYIniB );        
+
+                    var posXIniD = getRandomInt(anchoImgNav + espacioDisponibleTercio, anchoImgNav + 2*espacioDisponibleTercio);
+                    var posYIniD = getRandomInt(1, 60);       
+                    $( "#navCabecera" ).append( "<img id='logoD' src='images/logoD.png' style='z-index:20;position:absolute;width:auto;height:50px;' ></img>" );
+                    $( "#logoD" ).css( "left", posXIniD );
+                    $( "#logoD" ).css( "top", posYIniD );        
+
+                    var posXIniA = getRandomInt(anchoImgNav + 2*espacioDisponibleTercio, anchoImgNav + (3*espacioDisponibleTercio-50));
+                    var posYIniA = getRandomInt(1, 60);
+
+                    $( "#navCabecera" ).append( "<img id='logoA' src='images/logoA.png' style='z-index:50;position:absolute;width:auto;height:50px;' ></img>" );
+                    $( "#logoA" ).css( "left", posXIniA );
+                    $( "#logoA" ).css( "top", posYIniA );                                       
+
+                }                        
+
+            }
+            else{                
+
+                var alturaNavegadorDisponible = ($( document ).height()) - aluraNavBar;
+
+                $( "#fondo" ).css( "padding-top", aluraNavBar );
+                $( "#fondo" ).css( "height", alturaNavegadorDisponible );
+
+                $( "#fondo" ).append( "<img id='imgBackgroundBM' class='img-fluid mostrar' src='images/backgroundBM.png'></img>" );
+                $( "#fondo" ).append( "<img id='imgBackgroundCM' class='img-fluid ocultar' src='images/backgroundCM.png'></img>" );
+                $( "#fondo" ).append( "<img id='imgBackgroundAM' class='img-fluid ocultar' src='images/backgroundAM.png'></img>" );   
+
+                $('body').toggleClass('fondoFin');
+                $('body').toggleClass('fondoIni');                              
+
+                $( "#navCabeceraImg > img" ).css( "height", 80 );
+                $( "#navFootImg > div > img" ).css( "height", 35 );
+                $( "#navFootImg > div > label" ).css( "font-size", "1rem");
+
+            }
+
+            // Retorna un entero aleatorio entre min (incluido) y max (excluido)
+            // ¡Usando Math.round() te dará una distribución no-uniforme!
+            function getRandomInt(min, max) {
+                return Math.floor(Math.random() * (max - min)) + min;
+            }
+
+            var contador = 0;
+            var incrementoDecremento = 0;
+            $("#contenedor").mousemove(function() {
+                //console.log(Math.random().toFixed(2));
+                var cambio = getRandomInt(1, 80);                
+               
+                if(cambio == 10){
+                     
+                    var opacityA = Math.random().toFixed(2);
+                    var opacityB = Math.random().toFixed(2);
+                    var opacityD = Math.random().toFixed(2);
+
+                    $( "#logoA" ).fadeTo( "slow" , opacityA, function() {});                    
+                    $( "#logoB" ).fadeTo( "slow" , opacityB, function() {});
+                    $( "#logoD" ).fadeTo( "slow" , opacityD, function() {});
+                    
+                    //console.log(contador.toFixed(2),Math.sin(contador).toFixed(2));
+                    var senF = Math.sin(contador);
+                    var cosF = Math.cos(contador);
+                    var senFF = Math.sin(contador);
+                    var coordenadaXAux = contador.toFixed(2);
+                    var coordenadaX = parseInt(coordenadaXAux[0]+coordenadaXAux[2]+coordenadaXAux[3]);
+                    var coordenadaYAux = senF.toFixed(2);
+                    var coordenadaY = parseInt(coordenadaYAux[0]+coordenadaYAux[2]+coordenadaYAux[3]);
+                    var coordenadaYYAux = cosF.toFixed(2);
+                    var coordenadaYY = parseInt(coordenadaYYAux[0]+coordenadaYYAux[2]+coordenadaYYAux[3]);       
+                    var coordenadaYYYAux = senFF.toFixed(2);
+                    var coordenadaYYY = parseInt(coordenadaYYYAux[0]+coordenadaYYYAux[2]+coordenadaYYYAux[3]);                                  
+             
+
+                    $("#logoA").css({'transform' : 'translate(' + coordenadaX +'px, ' + coordenadaY + 'px)'});                 
+                    $("#logoB").css({'transform' : 'translate(' + coordenadaX +'px, ' + coordenadaYY + 'px)'});
+                    $("#logoD").css({'transform' : 'translate(' + coordenadaX +'px, ' + coordenadaYYY + 'px)'});
+                     
+                    //console.log("contador",contador);
+
+                    if(contador >= 1.5){
+                        incrementoDecremento = 1;                             
+                    }
+                    if(contador <= 0){
+                        incrementoDecremento = 0;                             
+                    }
+
+                    if(incrementoDecremento == 0){
+                        contador = contador + 0.1;
+                    }
+                    else{
+                        contador = contador - 0.1;
+                    }                                         
+
+                }
+               
+            });           
+
+            var contadorImagenBack = 0;
+            var alturaNavegador = ($( document ).height());
+            var anchoNavegador = ($( document ).width());            
+
+            setInterval(function() {
+                
+                //horizontal
+                if(anchoNavegador > alturaNavegador){
+                    
+                    if(contadorImagenBack == 1){  
+                        $('#imgBackgroundB').toggleClass('mostrar');
+                        $('#imgBackgroundB').toggleClass('ocultar');                        
+              
+                        $('#imgBackgroundC').toggleClass('mostrar');
+                        $('#imgBackgroundC').toggleClass('ocultar');
+                  
+                    }    
+                    if(contadorImagenBack == 2){                    
+                        $('#imgBackgroundC').toggleClass('mostrar');
+                        $('#imgBackgroundC').toggleClass('ocultar');
+
+                        $('#imgBackgroundA').toggleClass('mostrar');
+                        $('#imgBackgroundA').toggleClass('ocultar');
+                    }       
+                    if(contadorImagenBack == 3){                    
+                        $('#imgBackgroundA').toggleClass('mostrar');
+                        $('#imgBackgroundA').toggleClass('ocultar');   
+
+                        $('#imgBackgroundB').toggleClass('mostrar');
+                        $('#imgBackgroundB').toggleClass('ocultar');                                             
+                        contadorImagenBack = 0;
+                    }                                        
+                }
+                else{
+
+                    if(contadorImagenBack == 1){                
+                        $('#imgBackgroundBM').toggleClass('mostrar');
+                        $('#imgBackgroundBM').toggleClass('ocultar');                        
+              
+                        $('#imgBackgroundCM').toggleClass('mostrar');
+                        $('#imgBackgroundCM').toggleClass('ocultar');
+
+
+                    }  
+                    if(contadorImagenBack == 2){      
+                        $('#imgBackgroundCM').toggleClass('mostrar');
+                        $('#imgBackgroundCM').toggleClass('ocultar');
+
+                        $('#imgBackgroundAM').toggleClass('mostrar');
+                        $('#imgBackgroundAM').toggleClass('ocultar');
+                 
+                    }      
+                    if(contadorImagenBack == 3){         
+                        $('#imgBackgroundAM').toggleClass('mostrar');
+                        $('#imgBackgroundAM').toggleClass('ocultar');   
+
+                        $('#imgBackgroundBM').toggleClass('mostrar');
+                        $('#imgBackgroundBM').toggleClass('ocultar');                                   
+                
+                        contadorImagenBack = 0;
+                    }                                           
+
+                }
+
+                contadorImagenBack = contadorImagenBack + 1;      
+
+            }, 4000);              
+
+
+            
+        });	 
+        </script>
+        {% endblock %}        
+
+    </body>
+</html>
